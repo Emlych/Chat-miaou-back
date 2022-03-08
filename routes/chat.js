@@ -39,20 +39,21 @@ router.get("/chats", async (req, res) => {
 router.get("/chat/:id", async (req, res) => {
   console.log("route: /chat/:id");
   try {
-    const chatroom = await ChatRoom.findById(req.params.id).populate([
-      {
-        path: "participants.user",
-        select: "username",
-        // model: "User",
-      },
-    ]);
-    // .exec((err, user) => {
-    //   if (err) {
-    //     console.log("error", err);
-    //   } else {
-    //     console.log("Populated User " + user);
-    //   }
-    // });
+    const chatroom = await ChatRoom.findById(req.params.id)
+      .populate([
+        {
+          path: "participants.user",
+          //select: "username",
+          model: "User",
+        },
+      ])
+      .exec((err, user) => {
+        if (err) {
+          console.log("error", err);
+        } else {
+          console.log("Populated User " + user);
+        }
+      });
     //const chatroom = await ChatRoom.findById(req.params.id);
     // .populate("participants.user")
 
